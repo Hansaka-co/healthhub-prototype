@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>HealthHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<button class="reset" onclick="resetApp()">↺ Reset for next tester</button>
+
+<div class="device">
+  <div class="notch"></div>
+  <div class="statusbar">
+    <span class="time" id="clock" onclick="tapReset()">9:41</span>
+    <span class="sb-r">
+      <svg width="18" height="12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#162420"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#162420"/><rect x="10" y="2" width="3" height="10" rx="1" fill="#162420"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#162420"/></svg>
+      <svg width="17" height="12" viewBox="0 0 17 12"><path d="M2 5 q6.5 -6 13 0" fill="none" stroke="#162420" stroke-width="1.6"/><path d="M5 8 q3.5 -3.5 7 0" fill="none" stroke="#162420" stroke-width="1.6"/><circle cx="8.5" cy="10.5" r="1.2" fill="#162420"/></svg>
+      <svg width="26" height="12"><rect x="0" y="0" width="22" height="12" rx="3" fill="none" stroke="#162420" stroke-width="1.2"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="#162420"/><rect x="23" y="3.5" width="2" height="5" rx="1" fill="#162420"/></svg>
+    </span>
+  </div>
+
+  <div class="viewport">
+
+    <!-- WELCOME -->
+    <section class="screen active" id="welcome">
+      <div class="logo"><svg width="40" height="40"><rect x="16" y="5" width="8" height="30" rx="2.5" fill="#fff"/><rect x="5" y="16" width="30" height="8" rx="2.5" fill="#fff"/></svg></div>
+      <div class="brand">HealthHub</div>
+      <div class="tagline">Stay on top of every appointment and prescription — calmly.</div>
+      <div class="field"><label>Email</label>
+        <div class="control"><input type="email" placeholder="you@email.com"><span class="ic"><svg width="18" height="18"><rect x="1" y="3" width="16" height="12" rx="2.5" fill="none" stroke="#6E7B77" stroke-width="1.5"/><path d="M2 5 L9 10 L16 5" fill="none" stroke="#6E7B77" stroke-width="1.5"/></svg></span></div></div>
+      <div class="field"><label>Password</label>
+        <div class="control"><input type="password" placeholder="••••••••"><span class="ic"><svg width="18" height="18"><rect x="3" y="8" width="12" height="9" rx="2.5" fill="none" stroke="#6E7B77" stroke-width="1.5"/><path d="M5 8 V5.5 a4 4 0 0 1 8 0 V8" fill="none" stroke="#6E7B77" stroke-width="1.5"/></svg></span></div></div>
+      <button class="link" style="text-align:right;margin-top:10px" onclick="toast('Password reset link sent')">Forgot password?</button>
+      <button class="btn primary" style="margin-top:14px" onclick="go('dashboard')">Continue</button>
+      <button class="link" onclick="toast('Sign-up coming soon')">New here? <b>Create an account</b></button>
+    </section>
+
+    <!-- DASHBOARD (home) -->
+    <section class="screen has-nav" id="dashboard">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div class="greet">Good morning,</div><div class="h-title">Alex</div></div>
+        <div class="avatar" onclick="tab('profile')"><svg width="20" height="20"><circle cx="10" cy="7" r="4" fill="none" stroke="#0E5A54" stroke-width="1.6"/><path d="M2 19 q8 -10 16 0" fill="none" stroke="#0E5A54" stroke-width="1.6"/></svg></div>
+      </div>
+      <div class="hero" id="hero">
+        <span class="urg" id="hero-urg"><span class="pulse"></span>In 35 min</span>
+        <div class="lab" id="hero-lab">Next up · Medication</div>
+        <div class="big" id="hero-big">Take Amoxicillin 500 mg</div>
+        <div class="small" id="hero-small">1 tablet · after meals · 2:00 PM</div>
+        <div class="act" id="hero-act">
+          <button class="mini solid" onclick="markTaken(event)">Mark as taken</button>
+          <button class="mini line" onclick="toast('Reminder snoozed 30 min');event.stopPropagation()">Snooze</button>
+        </div>
+      </div>
+      <div id="dash-banner"></div>
+      <div class="eyebrow">Appointments <span class="see" onclick="tab('visits')">See all</span></div>
+      <div id="dash-appts"></div>
+      <div class="eyebrow">Prescriptions <span class="see" onclick="tab('meds')">Manage</span></div>
+      <div class="card">
+        <div class="crow"><div class="tile amber"><svg width="24" height="24"><rect x="3" y="9" width="18" height="9" rx="4.5" fill="none" stroke="#D98A2B" stroke-width="1.7"/><line x1="12" y1="9" x2="12" y2="18" stroke="#D98A2B" stroke-width="1.7"/></svg></div>
+          <div style="flex:1"><div class="c-title">Amoxicillin 500 mg</div><div class="c-sub">1 tablet · after meals</div></div></div>
+        <div class="c-div"></div>
+        <div class="c-meta"><span class="c-sub" style="margin:0">Next dose</span><span class="when">2:00 PM today</span></div>
+      </div>
+      <button class="btn primary" style="margin-top:20px" onclick="startAdd()">
+        <svg width="20" height="20"><line x1="10" y1="3" x2="10" y2="17" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><line x1="3" y1="10" x2="17" y2="10" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>Add appointment</button>
+    </section>
+
+    <!-- VISITS -->
+    <section class="screen has-nav" id="visits">
+      <div class="h-title" style="margin-top:4px">My visits</div>
+      <div class="eyebrow">Upcoming</div>
+      <div id="visits-list"></div>
+      <button class="btn primary" style="margin-top:18px" onclick="startAdd()">
+        <svg width="20" height="20"><line x1="10" y1="3" x2="10" y2="17" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><line x1="3" y1="10" x2="17" y2="10" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>Add appointment</button>
+    </section>
+
+    <!-- MEDS -->
+    <section class="screen has-nav" id="meds">
+      <div class="h-title" style="margin-top:4px">Medications</div>
+      <div class="eyebrow">Current</div>
+      <div class="card"><div class="crow"><div class="tile amber"><svg width="24" height="24"><rect x="3" y="9" width="18" height="9" rx="4.5" fill="none" stroke="#D98A2B" stroke-width="1.7"/><line x1="12" y1="9" x2="12" y2="18" stroke="#D98A2B" stroke-width="1.7"/></svg></div>
+        <div style="flex:1"><div class="c-title">Amoxicillin 500 mg</div><div class="c-sub">1 tablet · after meals</div></div></div>
+        <div class="c-div"></div><div class="c-meta"><span class="c-sub" style="margin:0">Next dose</span><span class="when">2:00 PM today</span></div></div>
+      <div class="card"><div class="crow"><div class="tile amber"><svg width="24" height="24"><rect x="3" y="9" width="18" height="9" rx="4.5" fill="none" stroke="#D98A2B" stroke-width="1.7"/><line x1="12" y1="9" x2="12" y2="18" stroke="#D98A2B" stroke-width="1.7"/></svg></div>
+        <div style="flex:1"><div class="c-title">Vitamin D 1000 IU</div><div class="c-sub">1 capsule · morning</div></div></div>
+        <div class="c-div"></div><div class="c-meta"><span class="c-sub" style="margin:0">Next dose</span><span class="when">8:00 AM tomorrow</span></div></div>
+      <button class="btn ghost" style="margin-top:18px" onclick="toast('Add medication')">Add medication</button>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="screen has-nav" id="profile">
+      <div class="h-title" style="margin-top:4px">Profile</div>
+      <div class="card" style="display:flex;gap:13px;align-items:center;margin-top:14px">
+        <div class="tile teal" style="width:54px;height:54px;border-radius:50%"><svg width="24" height="24"><circle cx="12" cy="9" r="4.5" fill="none" stroke="#0E5A54" stroke-width="1.7"/><path d="M3 21 q9 -10 18 0" fill="none" stroke="#0E5A54" stroke-width="1.7"/></svg></div>
+        <div><div class="c-title" style="font-size:16px">Alex Carter</div><div class="c-sub">alex@email.com</div></div>
+      </div>
+      <div class="plist">
+        <div class="pitem" onclick="toast('Account settings')">Account <span class="c-sub" style="margin:0">›</span></div>
+        <div class="pitem" onclick="toast('Notifications')">Notifications <span class="c-sub" style="margin:0">›</span></div>
+        <div class="pitem" onclick="toast('Family members')">Family records <span class="c-sub" style="margin:0">›</span></div>
+        <div class="pitem" onclick="toast('Help &amp; support')">Help &amp; support <span class="c-sub" style="margin:0">›</span></div>
+        <div class="pitem" onclick="go('welcome')">Log out <span class="c-sub" style="margin:0">›</span></div>
+      </div>
+    </section>
+
+    <!-- ADD APPOINTMENT -->
+    <section class="screen" id="add">
+      <div class="hdr"><button class="back" onclick="go('dashboard',true)"><svg width="11" height="18"><path d="M9 1 L1 9 L9 17" fill="none" stroke="#162420" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h2>Add appointment</h2><span class="step">Step 1 / 2</span></div>
+      <div class="progress"><span class="on"></span><span></span></div>
+
+      <div class="field"><label>Appointment type</label>
+        <div class="control" onclick="toggleType()"><span id="type-val">Dental check-up</span><span class="ic"><svg width="14" height="14"><path d="M1 4 L7 10 L13 4" fill="none" stroke="#6E7B77" stroke-width="2"/></svg></span></div>
+        <div class="picker" id="typePanel"><div id="type-list"></div></div>
+      </div>
+
+      <div class="field"><label>Clinic / doctor name</label>
+        <div class="control"><input id="clinic" type="text" value="Dr. Mensah – Bright Smile Clinic"></div></div>
+
+      <div class="field"><label>Date</label>
+        <div class="control" onclick="openCal()"><span id="date-val" class="ph">Tap to choose a date</span><span class="ic"><svg width="18" height="18"><rect x="2" y="4" width="14" height="13" rx="2.5" fill="none" stroke="#6E7B77" stroke-width="1.5"/><line x1="2" y1="8" x2="16" y2="8" stroke="#6E7B77" stroke-width="1.5"/><line x1="6" y1="2" x2="6" y2="6" stroke="#6E7B77" stroke-width="1.5"/><line x1="12" y1="2" x2="12" y2="6" stroke="#6E7B77" stroke-width="1.5"/></svg></span></div>
+        <div class="picker" id="calPanel">
+          <div class="cal-head"><button class="cal-nav" onclick="calMove(-1)">‹</button><b id="cal-title">Month</b><button class="cal-nav" onclick="calMove(1)">›</button></div>
+          <div class="cgrid" id="cal-dows"></div><div class="cgrid" id="cal-grid" style="margin-top:4px"></div>
+        </div>
+      </div>
+
+      <div class="field"><label>Time</label>
+        <div class="control" onclick="openTime()"><span id="time-val" class="ph">Tap to choose a time</span><span class="ic"><svg width="18" height="18"><circle cx="9" cy="9" r="7" fill="none" stroke="#6E7B77" stroke-width="1.5"/><path d="M9 5 V9 L12 11" fill="none" stroke="#6E7B77" stroke-width="1.5" stroke-linecap="round"/></svg></span></div>
+        <div class="picker" id="timePanel"><div class="slots" id="time-slots"></div></div>
+      </div>
+
+      <button class="btn primary" style="margin-top:24px" onclick="toReminder()">Next</button>
+    </section>
+
+    <!-- REMINDERS -->
+    <section class="screen" id="reminder">
+      <div class="hdr"><button class="back" onclick="go('add',true)"><svg width="11" height="18"><path d="M9 1 L1 9 L9 17" fill="none" stroke="#162420" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h2>Reminders</h2><span class="step">Step 2 / 2</span></div>
+      <div class="progress"><span class="on"></span><span class="on"></span></div>
+      <div class="card" style="margin-top:16px">
+        <div class="crow"><div class="tile teal"><svg width="24" height="24"><path d="M3 4 q6 -5 12 0 q2 3 0 8 q-1.5 5.5 -3 5.5 q-2 0 -2 -4 q0 -2 -1.5 -2 q-1.5 0 -1.5 2 q0 4 -2 4 q-1.5 0 -3 -5.5 q-2 -5 0 -8 z" fill="none" stroke="#0E5A54" stroke-width="1.4"/></svg></div>
+          <div style="flex:1"><div class="c-title" id="r-type">Dental check-up</div><div class="c-sub" id="r-when">—</div></div></div>
+      </div>
+      <div class="eyebrow" style="margin-bottom:4px">Remind me before the appointment</div>
+      <div id="rem-rows"></div>
+      <button class="btn primary" style="margin-top:22px" onclick="saveAppt()">Save appointment</button>
+    </section>
+
+    <!-- CONFIRMATION -->
+    <section class="screen" id="confirm">
+      <div class="check"><svg viewBox="0 0 104 104" width="104" height="104"><circle cx="52" cy="52" r="40" fill="none" stroke="#0E5A54" stroke-width="3"/><path d="M36 53 L48 65 L70 39" fill="none" stroke="#0E5A54" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="confirm-h">Appointment added</div>
+      <div class="confirm-s" id="confirm-sub">Your reminders are set</div>
+      <div class="card" style="margin-top:24px">
+        <div class="c-title" id="cf-type">Dental check-up</div>
+        <div class="c-sub" id="cf-clinic">Dr. Mensah · Bright Smile Clinic</div>
+        <div class="c-div"></div>
+        <div class="c-meta"><span class="c-sub" style="margin:0">Date &amp; time</span><span class="when" id="cf-when">—</span></div>
+        <div class="c-div"></div>
+        <div class="c-sub" style="margin:0;font-weight:800;color:var(--ink-soft)">Reminders set</div>
+        <div class="rem-list" id="cf-rem"></div>
+      </div>
+      <button class="btn primary" style="margin-top:24px" onclick="finishToDashboard()">Back to dashboard</button>
+      <button class="link" onclick="toast('Added to your calendar')">Add to calendar</button>
+    </section>
+
+    <!-- shared bottom nav -->
+    <div class="nav" id="nav" style="display:none">
+      <a id="nav-dashboard" class="on" onclick="tab('dashboard')"><svg width="22" height="22"><path d="M3 12 L11 4 L19 12 M6 10 L6 19 L16 19 L16 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Home</a>
+      <a id="nav-visits" onclick="tab('visits')"><svg width="22" height="22"><rect x="4" y="5" width="14" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="4" y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="1.8"/></svg>Visits</a>
+      <a id="nav-meds" onclick="tab('meds')"><svg width="22" height="22"><rect x="3" y="7" width="16" height="9" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/><line x1="11" y1="7" x2="11" y2="16" stroke="currentColor" stroke-width="1.8"/></svg>Meds</a>
+      <a id="nav-profile" onclick="tab('profile')"><svg width="22" height="22"><circle cx="11" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 20 q8 -10 16 0" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Profile</a>
+    </div>
+
+    <div id="toast"></div>
+  </div>
+  <div class="homebar"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
