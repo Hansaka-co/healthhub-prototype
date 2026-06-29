@@ -14,5 +14,8 @@ Open `index.html` in any web browser — no installation needed.
 - `styles.css` — visual design system (colours, typography, components)
 - `app.js` — navigation, calendar, reminders, and app logic
 
+## low-fi prototype
+https://www.figma.com/proto/PzWc8w7QAoIKnUStywaQHF/HealthHub?node-id=0-1&t=TeYPlwpkE3cEsAff-1
+
 ## Live version
 [Add your GitHub Pages link here once published]
