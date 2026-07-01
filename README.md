@@ -18,4 +18,4 @@ Open `index.html` in any web browser — no installation needed.
 https://www.figma.com/proto/PzWc8w7QAoIKnUStywaQHF/HealthHub?node-id=0-1&t=TeYPlwpkE3cEsAff-1
 
 ## Live version
-[Add your GitHub Pages link here once published]
+https://hansaka-co.github.io/healthhub-prototype/
