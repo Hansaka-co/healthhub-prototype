@@ -17,5 +17,8 @@ Open `index.html` in any web browser — no installation needed.
 ## low-fi prototype
 https://www.figma.com/proto/PzWc8w7QAoIKnUStywaQHF/HealthHub?node-id=0-1&t=TeYPlwpkE3cEsAff-1
 
+## Hi-fi prototype
+https://www.figma.com/proto/PzWc8w7QAoIKnUStywaQHF/HealthHub?node-id=14-2&t=DNrvognpNrPLHLq2-1
+
 ## Live version
 https://hansaka-co.github.io/healthhub-prototype/
